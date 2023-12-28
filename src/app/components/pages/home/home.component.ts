@@ -5,17 +5,19 @@ import { MomentService } from '../../../services/moment.service';
 import { Moment } from '../../../Moments';
 import { environment } from '../../../../environments/environment';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule, RouterLink],
+  imports: [CommonModule, RouterLink, FontAwesomeModule],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })
 export class HomeComponent {
-
+  fasearch = faSearch;
+  SearchTerm : string = "";
 
   allMoments : Moment[] =[];
   moments: Moment[]=[];
@@ -35,6 +37,16 @@ export class HomeComponent {
       });
     })
     );
+  }
+
+  search(event: any):void{
+
+    const target = event.target as HTMLInputElement
+    const value = target.value
+
+    this.moments = this.allMoments.filter(moments =>{
+       return moments.title.toLocaleLowerCase().includes(value)
+    })
   }
 
 }

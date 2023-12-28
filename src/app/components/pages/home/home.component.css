@@ -39,3 +39,21 @@ a{
 a:hover{
     background-color: #efefef;
 }
+
+.search-conteiner{
+    margin-bottom: 2em;
+    width: 100%;
+}
+.search-conteiner form{
+    width: 30%;
+    position: relative;
+}
+.search-conteiner fa-icon{
+    position: absolute;
+    top: 8px;
+    left: 8px;
+}
+.search-conteiner input{
+    padding: 0.5em;
+    width: 100%;text-align: center;
+}
