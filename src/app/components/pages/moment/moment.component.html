@@ -15,7 +15,7 @@
         </button>
     </div>
     <div class="coments">
-        <h3>Comentários:{{moment.coments!.length > 0 ? moment.coments!.length : 0}}</h3>
+        <h3>Comentários:{{moment.coments!.length > 0 ? moment.coments?.length : 0}}</h3>
         <div *ngIf="moment.coments!.length > 0; else noComents ">
             <div class="coment-conteiner" *ngFor="let coment of moment.coments">
                 <p class="coment">{{coment.text}}</p>
@@ -28,14 +28,20 @@
     </div>
     <div class="coment-form">
         <h3>deixe um comentario</h3>
-        <form>
+        <form [formGroup]="comentForm" #formDir="ngForm" (ngSubmit)="onSubmit(formDir)">
             <div class="form-group">
                 <label for="text">Comentário:</label>
-                <textarea placeholder="O que você quer comentar" required></textarea>
+                <textarea formControlName="text" placeholder="O que você quer comentar" required></textarea>
+                <div *ngIf="text.invalid && formDir.submitted" class="validation-error">
+                    <p *ngIf="text.errors?.['required']">o texto é obrigatorio!</p>
+                </div>
             </div>
             <div class="form-group">
                 <label for="username">Nome:</label>
-                <input type="text" placeholder="Seu nome" required>
+                <input formControlName="username" type="text" placeholder="Seu nome" required>
+                <div *ngIf="username.invalid && formDir.submitted" class="validation-error">
+                    <p *ngIf="username.errors?.['required']">o Nome é obrigatorio!</p>
+                </div>
             </div>
             <input type="submit" value="Comentar!">
         </form>
