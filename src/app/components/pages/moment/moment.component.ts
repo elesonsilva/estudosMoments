@@ -59,7 +59,22 @@ export class MomentComponent {
     this.Router.navigate(['/']);
   }
 
-  onSubmit(FormDirective: FormGroupDirective){}
-      
+  async onSubmit(FormDirective: FormGroupDirective){
+    if(this.comentForm.invalid){
+      return
+    }
+    const data: Coment = this.comentForm.value
+    data.momentId = Number(this.moment!.id)
+
+    await this.comentService.creatComent(data).subscribe((coment) => this.moment!.coments!.push(coment.data))
+
+    this.messageService.add('Comentario adicionado')
+    //resete o Form
+    this.comentForm.reset()
+
+    FormDirective.resetForm()
+  }
+   
+  
 
 }
