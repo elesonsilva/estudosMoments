@@ -1,16 +1,17 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute,RouterLink } from '@angular/router';
 import { MomentService } from '../../../services/moment.service';
 import { Moment } from '../../../Moments';
 import { environment } from '../../../../environments/environment';
 import { faTimes, faEdit } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { MessagesService } from '../../../services/messages.service';
 
 @Component({
   selector: 'app-moment',
   standalone: true,
-  imports: [CommonModule, FontAwesomeModule],
+  imports: [CommonModule, FontAwesomeModule, RouterLink],
   templateUrl: './moment.component.html',
   styleUrl: './moment.component.css'
 })
@@ -22,7 +23,9 @@ export class MomentComponent {
 
   constructor(
     private momentService:MomentService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private messageService: MessagesService,
+    private Router: Router,
     ){}
 
   ngOnInit():void{
@@ -31,5 +34,12 @@ export class MomentComponent {
     this.momentService.getMoment(id).subscribe((item) => (this.moment = item.data))
   }
 
+
+  async removeHendler(id: Number){
+    await this.momentService.removeMoment(id).subscribe();
+    this.messageService.add("Momento excluido com sucesso");
+    this.Router.navigate(['/']);
+  }
+      
 
 }

@@ -29,4 +29,14 @@ export class MomentService {
   createMoment(formData: FormData): Observable<FormData>{
     return this.http.post<FormData>(this.apiUrl, formData);
 }
+
+  removeMoment(id: Number){
+    const url = `${this.apiUrl}/${id}`
+    return this.http.delete(url);
+  }
+
+  updateMoment(id: Number, formData: FormData): Observable<FormData>{
+    const url = `${this.apiUrl}/${id}`
+    return this.http.put<FormData>(url, formData);
+  }
 }
